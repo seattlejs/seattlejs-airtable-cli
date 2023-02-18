@@ -1,7 +1,8 @@
 # SeattleJS CLI
 ### Getting Started
 1. `git clone https://github.com/fx-wood/seattlejs-airtable-cli`
-2. cd seattlejs-airtable-cli
+2. `cd seattlejs-airtable-cli`
+3. `npm install`
 
 ### Make a Personal Access Token (PAT)
 1. visit https://airtable.com/create/tokens
@@ -25,3 +26,4 @@ If you need to generate speaker json and images, run the following:
 3. copy the json output into seattlejs.com/app/api/speakers.mjs
 4. make sure to proof-read the json and check the images. 
 5. open a PR against the main repo!
+
