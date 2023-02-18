@@ -4,8 +4,8 @@
     "description":"cli for managing seattlejs data",
     "main":"index.js",
     "scripts":{
-        "speakers": "node --no-experimental-fetch index.js",
-        "lint":"eslint ./index.js --fix && prettier \"./index.js\" --write"
+        "speakers": "node --no-experimental-fetch index.js --speakers",
+        "lint":"eslint ./index.js ./src --fix && prettier \"./index.js\" \"./src\" --write"
     },
     "dependencies":{
         "airtable":"^0.11.6",
