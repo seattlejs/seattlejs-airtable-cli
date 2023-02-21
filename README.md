@@ -23,11 +23,10 @@
 5. search for the text `The id for Speakers is` and copy the table id into the .env file
 
 ### Run the CLI
+1. `npm run all`
+2. copy the contents of `speakers.json`, `talks.json`, and `images/` into the website
 
-If you need to generate speaker json and images, run the following:
+If you only need to generate speaker images/json (not talks) run the following:
 
 1. `npm run speakers`
-2. copy the images into `seattlejs.com/public/images/speakers`
-3. copy the json output into `seattlejs.com/app/api/speakers.mjs`
-4. make sure to proof-read the json and check the images.
-5. open a PR against the main repo!
+2. copy the contents of `speakers.json` and `images/` into the website
