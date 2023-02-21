@@ -1,9 +1,6 @@
-exports.mapSpeakers = async () => {
-  require('dotenv').config()
-  const fs = require('fs/promises')
-  const prompts = require('prompts')
-  const Airtable = require('airtable')
+exports.mapSpeakers = async airtableSpeakers => {
   const Jimp = require('jimp')
+    const fs = require('fs/promises')
 
   // this output will make directories if they don't exist
   const SPEAKERS_IMAGE_DIR = './images'
@@ -11,47 +8,6 @@ exports.mapSpeakers = async () => {
   const SPEAKERS_JSON_OUTPUT = './speakers.json'
   const MAX_IMAGE_SIZE_BYTES = 300000
 
-  Airtable.configure({
-    apiKey: process.env.AIRTABLE_TOKEN,
-    endpointUrl: 'https://api.airtable.com'
-  })
-  const base = Airtable.base(process.env.BASE_ID)
-  const eventsId = process.env.EVENTS_TABLE_ID
-  const speakersId = process.env.SPEAKERS_TABLE_ID
-
-  const events = []
-  await base(eventsId)
-    // grid view omits RSVPs, which is a very verbose field
-    .select({ view: 'Grid view', sort: [{ field: 'Date', direction: 'asc' }] })
-    .eachPage(function page(records, fetchNextPage) {
-      records.forEach(r => events.push(r))
-      fetchNextPage()
-    })
-  // grab the last 3 events
-  const nearEvents = events.slice(-3)
-  const choices = await Promise.all(
-    nearEvents.map(async e => {
-      const speakerIds = e.get('Booked Speakers')
-      const speakers = await Promise.all(
-        speakerIds.map(speaker => base(speakersId).find(speaker))
-      )
-      const speakerNames = await speakers.map(speaker =>
-        speaker.get('Full Name')
-      )
-      return {
-        title: e.get('Name'),
-        description: `speakers: ${speakerNames}`,
-        value: { eventObj: e, speakerObjects: speakers }
-      }
-    })
-  )
-  const choice = await prompts({
-    type: 'select',
-    name: 'eventChoice',
-    message: 'which event would you like to update?',
-    choices: choices
-  })
-  // make speakers
   const speakerShape = {
     id: '',
     name: '',
@@ -61,7 +17,7 @@ exports.mapSpeakers = async () => {
   }
   const speakersOutput = []
   console.log('writing images to ' + SPEAKERS_IMAGE_DIR)
-  for (let speaker of choice.eventChoice.speakerObjects) {
+  for (let speaker of airtableSpeakers) {
     const output = { ...speakerShape }
     const name = speaker.get('Full Name')
     const id = name.toLowerCase().replace(' ', '-')
