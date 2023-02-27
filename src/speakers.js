@@ -47,3 +47,4 @@ exports.mapSpeakers = async airtableSpeakers => {
   console.log('writing speakers json to ' + SPEAKERS_JSON_OUTPUT)
   await fs.writeFile(SPEAKERS_JSON_OUTPUT, jsonOutput)
 }
+
