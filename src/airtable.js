@@ -40,31 +40,31 @@ exports.getAirtableData = async (airtableBase, prompts) => {
 }
 
 exports.getAirtableSponsors = async (airtableBase, prompts) => {
-    const sponsorsId = process.env.SPONSORS_TABLE_ID
-    const sponsors = []
-    await airtableBase(sponsorsId)
-        .select()
-        .eachPage(function page(records, fetchNextPage) {
-            records.forEach(r => {
-                sponsors.push(r)
-                fetchNextPage()
-            })
-        })
-    const choices = sponsors.map(sponsor => {
-        return {
-            title: sponsor.get('Name'),
-            description: sponsor.get('Website'),
-            value: sponsor
-        }
+  const sponsorsId = process.env.SPONSORS_TABLE_ID
+  const sponsors = []
+  await airtableBase(sponsorsId)
+    .select()
+    .eachPage(function page(records, fetchNextPage) {
+      records.forEach(r => {
+        sponsors.push(r)
+        fetchNextPage()
+      })
     })
-    const selections = await prompts({
-        type: 'multiselect',
-        name: 'sponsorChoice',
-        min: 1,
-        message: 'which sponsor(s) would you like to update? You can pick more than one.',
-        hint: 'press right arrow to select',
-        choices: choices
-    })
-    return selections.sponsorChoice
+  const choices = sponsors.map(sponsor => {
+    return {
+      title: sponsor.get('Name'),
+      description: sponsor.get('Website'),
+      value: sponsor
+    }
+  })
+  const selections = await prompts({
+    type: 'multiselect',
+    name: 'sponsorChoice',
+    min: 1,
+    message:
+      'which sponsor(s) would you like to update? You can pick more than one.',
+    hint: 'press right arrow to select',
+    choices: choices
+  })
+  return selections.sponsorChoice
 }
-

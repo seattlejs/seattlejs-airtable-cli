@@ -4,7 +4,7 @@
  * @param {Object} airtableSpeakers - Speaker objects from the airtable API.
  */
 exports.mapTalks = async (airtableEvent, airtableSpeakers) => {
-    const fs = require('fs/promises')
+  const fs = require('fs/promises')
   const TALKS_JSON_OUTPUT = './talks.json'
   const makeEventId = require('./normalizers').makeEventId
   const makeSpeakerId = require('./normalizers').makeSpeakerId
@@ -30,6 +30,6 @@ exports.mapTalks = async (airtableEvent, airtableSpeakers) => {
     talk.abstract = normalizeTalkAbstract(speaker.get('Talk Blurb'))
     talksOutput.push(talk)
   }
-      console.log('writing talks json to ', TALKS_JSON_OUTPUT)
-      await fs.writeFile(TALKS_JSON_OUTPUT, JSON.stringify(talksOutput, null, 4))
+  console.log('writing talks json to ', TALKS_JSON_OUTPUT)
+  await fs.writeFile(TALKS_JSON_OUTPUT, JSON.stringify(talksOutput, null, 4))
 }

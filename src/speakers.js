@@ -1,6 +1,6 @@
 exports.mapSpeakers = async airtableSpeakers => {
   const Jimp = require('jimp')
-    const fs = require('fs/promises')
+  const fs = require('fs/promises')
 
   // this output will make directories if they don't exist
   const SPEAKERS_IMAGE_DIR = './images'
@@ -47,4 +47,3 @@ exports.mapSpeakers = async airtableSpeakers => {
   console.log('writing speakers json to ' + SPEAKERS_JSON_OUTPUT)
   await fs.writeFile(SPEAKERS_JSON_OUTPUT, jsonOutput)
 }
-
