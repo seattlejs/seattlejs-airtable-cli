@@ -9,7 +9,6 @@ exports.getAirtableData = async (airtableBase, prompts) => {
     .eachPage(function page(records, fetchNextPage) {
       records.forEach(r => {
         events.push(r)
-        console.log(r)
         fetchNextPage()
       })
     })
