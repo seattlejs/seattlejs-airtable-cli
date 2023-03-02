@@ -1,7 +1,7 @@
 exports.mapSpeakers = async airtableSpeakers => {
   const Jimp = require('jimp')
   const fs = require('fs/promises')
-
+  const normalizeTwitterHandle = require('./normalizers').normalizeTwitterHandle
   // this output will make directories if they don't exist
   const SPEAKERS_IMAGE_DIR = './images'
   // currently this output can't make directories, path must exist
@@ -24,14 +24,9 @@ exports.mapSpeakers = async airtableSpeakers => {
     output.name = name
     output.id = id
     output.company = speaker.get('Company')
-    const rawTwitter = speaker.get('Twitter')
-    if (rawTwitter[0] === '@') {
-      output.twitter = rawTwitter.slice(1)
-    } else {
-      output.twitter = rawTwitter
-    }
+    const twitter = normalizeTwitterHandle(speaker.get('Twitter'))
+    output.twitter = twitter
     output.photo = id + '.jpg'
-
     const photoObj = speaker.get('Photo')[0]
     const imageUrl = photoObj.url
     var image = await Jimp.read(imageUrl)

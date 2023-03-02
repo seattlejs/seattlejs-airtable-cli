@@ -17,3 +17,12 @@ exports.normalizeTalkTitle = talkName => {
 exports.normalizeTalkAbstract = talkAbstract => {
   return talkAbstract
 }
+
+exports.normalizeTwitterHandle = rawTwitter => {
+  if (typeof rawTwitter === 'undefined') {
+    return ''
+  }
+  if (rawTwitter[0] === '@') {
+    return rawTwitter.slice(1)
+  }
+}
