@@ -23,8 +23,7 @@ const argv = yargs(process.argv.slice(2))
   .alias('t', 'talks')
   .boolean('S')
   .describe('S', 'output sponsor image(s) and json to add to the website')
-  .alias('S', 'sponsors')
-  .argv
+  .alias('S', 'sponsors').argv
 ;(async () => {
   if (argv.speakers || argv.talks) {
     const airtableData = await getAirtableData(airtableBase, prompts)

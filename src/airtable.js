@@ -9,6 +9,7 @@ exports.getAirtableData = async (airtableBase, prompts) => {
     .eachPage(function page(records, fetchNextPage) {
       records.forEach(r => {
         events.push(r)
+        console.log(r)
         fetchNextPage()
       })
     })
@@ -16,7 +17,7 @@ exports.getAirtableData = async (airtableBase, prompts) => {
   const nearEvents = events.slice(-3)
   const choices = await Promise.all(
     nearEvents.map(async e => {
-      const speakerIds = e.get('Booked Speakers')
+      const speakerIds = e.get('Speakers')
       const speakers = await Promise.all(
         speakerIds.map(speaker => airtableBase(speakersId).find(speaker))
       )
