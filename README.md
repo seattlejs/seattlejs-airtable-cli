@@ -1,5 +1,7 @@
 # SeattleJS CLI
 
+### DEPRECATED in favor of a data pipeline that doesn't include human interaction
+
 ### Getting Started
 
 1. `git clone https://github.com/fx-wood/seattlejs-airtable-cli`
