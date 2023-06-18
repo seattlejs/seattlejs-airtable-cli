@@ -1,12 +1,5 @@
-# DataMunger
-
-This tool takes all of our airtable data and generates output appropriate for the website (mostly json and some images).
-
-### Getting Started
-
-1. navigate to the root of the seattlejs/seattlejs.com project
-2. `cd dataMunger`
-3. `npm install`
+# seattlejs-airtable-cli
+This cli takes data from our airtable data store and adds it to the website.
 
 ### Make a Personal Access Token (PAT)
 
