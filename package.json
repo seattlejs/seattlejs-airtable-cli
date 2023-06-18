@@ -1,12 +1,14 @@
 {
-  "name": "seattlejs-airtable-cli",
+  "name": "seattlejs-data-pipeline",
   "version": "1.0.0",
-  "description": "cli for managing seattlejs data",
+  "description": "data pipeline for producing seattlejs website data",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "all": "node --no-experimental-fetch index.js --speakers --talks",
-    "speakers": "node --no-experimental-fetch index.js --speakers",
-    "sponsors": "node --no-experimental-fetch index.js --sponsors",
+    "start": "ts-node --esm index.ts",
+    "test": "npm run build && mocha test ./out/test/*.spec.js",
+    "build": "tsc --build",
+    "pipeline": "node --no-experimental-fetch index.js && pushd .. && npm run lint && popd",
     "lint": "prettier ./index.js ./src --write && eslint ./index.js ./src --fix"
   },
   "dependencies": {
@@ -14,12 +16,18 @@
     "dotenv": "^16.0.3",
     "jimp": "^0.22.4",
     "prompts": "^2.4.2",
-    "yargs": "^17.6.2"
+    "slugify": "^1.6.6",
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/prompts": "^2.4.4",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^4.2.1",
-    "prettier": "2.8.3"
+    "lodash": "^4.17.21",
+    "mocha": "^10.2.0",
+    "prettier": "2.8.3",
+    "ts-node": "^10.9.1"
   },
   "eslintConfig": {
     "env": {
@@ -38,17 +46,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fx-wood/seattlejs-airtable-cli.git"
+    "url": "git+https://github.com/seattlejs/seattlejs.com.git"
   },
   "keywords": [
-    "cli",
     "seattlejs"
-  ],
-  "author": "fx-wood",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/fx-wood/seattlejs-airtable-cli/issues"
-  },
-  "homepage": "https://github.com/fx-wood/seattlejs-airtable-cli#readme"
+  ]
 }
-
