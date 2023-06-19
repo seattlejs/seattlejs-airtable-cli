@@ -1,4 +1,3 @@
-import * as dotenv from "dotenv";
 import Airtable from "airtable";
 import {
   getAirtableEvents,
@@ -14,6 +13,8 @@ import {
 import {
   confirmUpdate,
   getTargetEvent,
+  promptForApiToken,
+  promptForSeattlejsProjectPath,
   promptPhotoResize,
 } from "./src/repos/user-input.js";
 import {
@@ -29,13 +30,32 @@ import {
   AirtableMetadata,
   getAirtableMeadata,
 } from "./src/repos/airtable-metadata.js";
+import { getApiToken, saveApiToken } from "./src/auth.js";
+import { loadConfig, saveConfig } from "./src/config.js";
 
-dotenv.config();
+// check for token
+let token = await getApiToken()
+if (!token) {
+    // if it doesn't exist, ask for token
+    token = await promptForApiToken()
+    // TODO: validate token before saving and retry if bad
+    // or prompt to add the correct scopes
+    saveApiToken(token)
+}
+
+let config = await loadConfig()
+if (!config.seattlejsProjectPath) {
+    // ask user for path to project
+    const projectPath = await promptForSeattlejsProjectPath()
+    // TODO: validate that some stuff we expect to exist actually doesn
+    config.seattlejsProjectPath = projectPath
+    await saveConfig(config)
+}
 
 const airtableMetadata: AirtableMetadata = await getAirtableMeadata();
 
 Airtable.configure({
-  apiKey: process.env.AIRTABLE_TOKEN,
+  apiKey: token,
   endpointUrl: "https://api.airtable.com",
 });
 const airtableBase = Airtable.base(airtableMetadata.baseId);
@@ -54,10 +74,10 @@ const airtableSponsors = await getAirtableSponsors(
   airtableMetadata.sponsorsId
 );
 // load all the data that is in the website json
-const websiteEvents = await getWebsiteEvents();
-const websiteSpeakers = await getWebsiteSpeakers();
-const websiteTalks = await getWebsiteTalks();
-const websiteSponsors = await getWebsiteSponsors();
+const websiteEvents = await getWebsiteEvents(config.seattlejsProjectPath);
+const websiteSpeakers = await getWebsiteSpeakers(config.seattlejsProjectPath);
+const websiteTalks = await getWebsiteTalks(config.seattlejsProjectPath);
+const websiteSponsors = await getWebsiteSponsors(config.seattlejsProjectPath);
 
 // associate all the airtable events with the website events
 // this is kind of bad because it will miss events that are in
@@ -100,14 +120,14 @@ const confirmation = await confirmUpdate(
   updatedSponsors
 );
 if (confirmation) {
-  await exportData(websiteSpeakers, "speakers");
-  const existingPhotos = await exportImages(newPhotos, "speakers");
-  await exportData(websiteTalks, "talks");
+  await exportData(websiteSpeakers, "speakers", config.seattlejsProjectPath);
+  const existingPhotos = await exportImages(newPhotos, "speakers", config.seattlejsProjectPath);
+  await exportData(websiteTalks, "talks", config.seattlejsProjectPath);
 
-  await exportData(websiteSponsors, "sponsors");
-  await exportImages(newLogos, "sponsors");
+  await exportData(websiteSponsors, "sponsors", config.seattlejsProjectPath);
+  await exportImages(newLogos, "sponsors", config.seattlejsProjectPath);
 
-  await exportData(websiteEvents, "events");
+  await exportData(websiteEvents, "events", config.seattlejsProjectPath);
 
   promptPhotoResize(existingPhotos);
 } else {

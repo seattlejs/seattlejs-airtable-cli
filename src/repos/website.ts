@@ -27,18 +27,18 @@ const parseJSONFile = async (filePath: string): Promise<any> => {
   return JSON.parse(String(textBuffer));
 };
 
-export const getWebsiteEvents = async (): Promise<WebsiteEvent[]> => {
-  return parseJSONFile(JSON_FILES["events"]);
+export const getWebsiteEvents = async (projectPath: string): Promise<WebsiteEvent[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["events"]))
 };
 
-export const getWebsiteSpeakers = async (): Promise<WebsiteSpeaker[]> => {
-  return parseJSONFile(JSON_FILES["speakers"]);
+export const getWebsiteSpeakers = async (projectPath: string): Promise<WebsiteSpeaker[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["speakers"]))
 };
-export const getWebsiteTalks = async (): Promise<WebsiteTalk[]> => {
-  return parseJSONFile(JSON_FILES["talks"]);
+export const getWebsiteTalks = async (projectPath: string): Promise<WebsiteTalk[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["talks"]))
 };
-export const getWebsiteSponsors = async (): Promise<WebsiteSponsor[]> => {
-  return parseJSONFile(JSON_FILES["sponsors"]);
+export const getWebsiteSponsors = async (projectPath: string): Promise<WebsiteSponsor[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["sponsors"]))
 };
 
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -54,14 +54,14 @@ const exists = async (path: string) => {
   }
 };
 
-export const exportImages = async (imageObjects, type) => {
+export const exportImages = async (imageObjects, type, projectPath) => {
   const exportedImages = [];
   for (let imageObj of imageObjects) {
     // need to prevent getting rate-limited
     await sleep(250);
     if (imageObj.imageUri && imageObj.filename) {
       const imageUri = imageObj.imageUri;
-      const filePath = path.join(IMAGE_DIRS[type], imageObj.filename);
+      const filePath = path.join(projectPath, IMAGE_DIRS[type], imageObj.filename);
       const imageExists = await exists(filePath);
       if (!imageExists) {
         exportedImages.push(imageObj);
@@ -74,11 +74,12 @@ export const exportImages = async (imageObjects, type) => {
   return exportedImages;
 };
 
-export const exportData = async (jsData, type) => {
+export const exportData = async (jsData, type, projectPath) => {
   console.log("exporting", JSON_FILES[type]);
 
   const json = JSON.stringify(jsData, null, 4);
-  await fs.writeFile(JSON_FILES[type], json);
+  const fullPath = path.join(projectPath, JSON_FILES[type])
+  await fs.writeFile(fullPath, json);
 };
 
 import Fs from "fs";

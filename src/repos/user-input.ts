@@ -79,3 +79,23 @@ export const promptPhotoResize = (newPhotos: AirtablePhoto[]): void => {
     console.log(message.join(""));
   }
 };
+
+export const promptForApiToken = async (): Promise<string> => {
+    const res = await prompts({
+        type: "text",
+        name: "apiToken",
+        message: "please provide an airtable Personal Access Token with scopes: \n  data.records:read \n  schema.bases:read"
+    })
+    return res.apiToken
+}
+
+export const promptForSeattlejsProjectPath = async (): Promise<string> => {
+    const res = await prompts({
+        type: "text",
+        name: "projectPath",
+        message: "please provide the path to your local seattlejs.com repo"
+    })
+    return res.projectPath
+}
+
+
