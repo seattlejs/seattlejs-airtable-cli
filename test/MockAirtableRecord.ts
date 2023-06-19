@@ -4,21 +4,21 @@ type JSONValue =
   | number
   | boolean
   | { [x: string]: JSONValue }
-  | Array<JSONValue>
+  | Array<JSONValue>;
 
 export class MockRecord {
-  public id: string
-  public rawJson: JSONValue
-  public fields: JSONValue
+  public id: string;
+  public rawJson: JSONValue;
+  public fields: JSONValue;
 
   /** get the raw json for an airtable record by logging its "_rawJson" field */
   constructor(airtableRecordJson: JSONValue) {
-    this.id = airtableRecordJson['id']
-    this.rawJson = airtableRecordJson
-    this.fields = airtableRecordJson['fields']
+    this.id = airtableRecordJson["id"];
+    this.rawJson = airtableRecordJson;
+    this.fields = airtableRecordJson["fields"];
   }
 
   get(field: string) {
-    return this.fields[field]
+    return this.fields[field];
   }
 }
