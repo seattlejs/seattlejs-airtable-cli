@@ -39,3 +39,14 @@ export const getAirtableSponsors = async (airtableBase, sponsorsId: string) => {
     });
   return sponsors;
 };
+
+export const validateAirtableToken = (token: string): boolean => {
+    const validRegex = /^pat\w{14}\.\w{64}$/
+    if (!validRegex.test(token)) {
+        return false
+    }
+    // TODO: check metadata api calls for base scope
+    // TODO: check airtable api for record:read scope
+    return true
+}
+

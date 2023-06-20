@@ -17,9 +17,9 @@ export type AirtableMetadata = {
   sponsorsId: string;
 };
 
-const airtableRequest = async (uri: string) => {
+const airtableRequest = async (uri: string, token: string) => {
   const headers = {
-    Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`,
+    Authorization: `Bearer ${token}`,
   };
   const res = await fetch(uri, { headers });
   const data = await res.json();
@@ -29,22 +29,23 @@ const airtableRequest = async (uri: string) => {
 /** the "metadata" api is not included in the airtable.js library,
  * need to make a client
  */
-const getAirtableBases = async (): Promise<AirtableBase[]> => {
+const getAirtableBases = async (token: string): Promise<AirtableBase[]> => {
   const uri = `${URI_BASE}meta/bases`;
-  const data = await airtableRequest(uri);
+  const data = await airtableRequest(uri, token);
+  console.log(data)
   return data.bases;
 };
 
-const getAirtableTables = async (baseId: string) => {
+const getAirtableTables = async (baseId: string, token: string) => {
   const uri = `${URI_BASE}meta/bases/${baseId}/tables`;
-  const data = await airtableRequest(uri);
+  const data = await airtableRequest(uri, token);
   return data.tables;
 };
 
 /** get seattlejs base from a list of airtable bases
  */
-const getSeattleJsBaseId = async (): Promise<string> => {
-  const airtableBases = await getAirtableBases();
+const getSeattleJsBaseId = async (token: string): Promise<string> => {
+  const airtableBases = await getAirtableBases(token);
   for (let base of airtableBases) {
     if (base.name === BASE_NAME) {
       return base.id;
@@ -53,9 +54,9 @@ const getSeattleJsBaseId = async (): Promise<string> => {
   throw new Error("unable to find airtable base id, try entering it manually");
 };
 
-export const getAirtableMeadata = async (): Promise<AirtableMetadata> => {
-  const baseId = await getSeattleJsBaseId();
-  const tables = await getAirtableTables(baseId);
+export const getAirtableMeadata = async (token: string): Promise<AirtableMetadata> => {
+  const baseId = await getSeattleJsBaseId(token);
+  const tables = await getAirtableTables(baseId, token);
   const eventsTable = tables.find((table) => table.name === EVENTS_TABLE_NAME);
   const speakersTable = tables.find(
     (table) => table.name === SPEAKERS_TABLE_NAME

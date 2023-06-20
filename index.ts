@@ -33,26 +33,20 @@ import {
 import { getApiToken, saveApiToken } from "./src/auth.js";
 import { loadConfig, saveConfig } from "./src/config.js";
 
-// check for token
 let token = await getApiToken()
 if (!token) {
-    // if it doesn't exist, ask for token
     token = await promptForApiToken()
-    // TODO: validate token before saving and retry if bad
-    // or prompt to add the correct scopes
-    saveApiToken(token)
+    await saveApiToken(token)
 }
 
 let config = await loadConfig()
 if (!config.seattlejsProjectPath) {
-    // ask user for path to project
     const projectPath = await promptForSeattlejsProjectPath()
-    // TODO: validate that some stuff we expect to exist actually doesn
     config.seattlejsProjectPath = projectPath
     await saveConfig(config)
 }
 
-const airtableMetadata: AirtableMetadata = await getAirtableMeadata();
+const airtableMetadata: AirtableMetadata = await getAirtableMeadata(token);
 
 Airtable.configure({
   apiKey: token,

@@ -7,8 +7,8 @@ import {
   WebsiteTalk,
 } from "./website-types.js";
 
-const IMAGE_BASE = "../public";
-const JSON_BASE = "../app/data";
+const IMAGE_BASE = "public";
+const JSON_BASE = "app/data";
 
 const IMAGE_DIRS = {
   speakers: path.join(IMAGE_BASE, "images/speakers"),
@@ -21,6 +21,18 @@ const JSON_FILES = {
   talks: path.join(JSON_BASE, "talks.json"),
   sponsors: path.join(JSON_BASE, "sponsors.json"),
 };
+
+export const validateSeattleJsProjectPath = async (projectPath: string): Promise<boolean> => {
+    console.log('input path', projectPath)
+    for (let [type,file] of Object.entries(JSON_FILES)) {
+        const fullPath = path.join(projectPath, file)
+        console.log('validating path', fullPath)
+        if (!await exists(fullPath)) {
+            return false
+        }
+    }
+    return true
+}
 
 const parseJSONFile = async (filePath: string): Promise<any> => {
   const textBuffer = await fs.readFile(filePath);
@@ -45,7 +57,7 @@ const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 /** check if if file exists. Stolen from
  * https://futurestud.io/tutorials/node-js-check-if-a-file-exists
  */
-const exists = async (path: string) => {
+const exists = async (path) => {
   try {
     await fs.access(path);
     return true;
