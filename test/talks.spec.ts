@@ -75,4 +75,30 @@ describe("reconcileTalks", function () {
       );
     });
   });
+  describe("should handle when talk exists but it's not on the event", function () {
+      const te = _.cloneDeep(targetEvent)
+      // remove dm from events json but not from talks json
+      te.websiteTalks = te.website.talks.filter(
+          (talkId) => !talkId.includes('dm-liao')
+      )
+      const updatedTalks = reconcileTalks(te, airtableSpeakers, websiteTalks)
+    it("should return no talks to update", function () {
+      assert(
+        updatedTalks.length === 0,
+        `${updatedTalks.length} talks were returned, expected 0`
+      );
+    });
+    it("should update the event json", function () {
+      assert(
+        te.website.talks.length === 3,
+        `event has ${te.website.talks.length} instead of 3`
+      );
+      assert(
+        te.website.talks.every((id) => correctTalkIds.includes(id)),
+        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`
+      );
+    });
+  })
 });
+
+
