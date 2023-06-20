@@ -32,7 +32,6 @@ const airtableRequest = async (uri: string, token: string) => {
 const getAirtableBases = async (token: string): Promise<AirtableBase[]> => {
   const uri = `${URI_BASE}meta/bases`;
   const data = await airtableRequest(uri, token);
-  console.log(data)
   return data.bases;
 };
 
@@ -54,7 +53,7 @@ const getSeattleJsBaseId = async (token: string): Promise<string> => {
   throw new Error("unable to find airtable base id, try entering it manually");
 };
 
-export const getAirtableMeadata = async (token: string): Promise<AirtableMetadata> => {
+export const getAirtableMetadata = async (token: string): Promise<AirtableMetadata> => {
   const baseId = await getSeattleJsBaseId(token);
   const tables = await getAirtableTables(baseId, token);
   const eventsTable = tables.find((table) => table.name === EVENTS_TABLE_NAME);

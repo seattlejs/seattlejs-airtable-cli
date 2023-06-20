@@ -29,7 +29,7 @@ import { reconcileTalks } from "./src/talks.js";
 import { exportImages, exportData } from "./src/repos/website.js";
 import {
   AirtableMetadata,
-  getAirtableMeadata,
+  getAirtableMetadata,
 } from "./src/repos/airtable-metadata.js";
 import { getApiToken, saveApiToken } from "./src/auth.js";
 import { loadConfig, saveConfig } from "./src/config.js";
@@ -48,7 +48,7 @@ if (!config.seattlejsProjectPath) {
     await saveConfig(config)
 }
 
-const airtableMetadata: AirtableMetadata = await getAirtableMeadata(token);
+const airtableMetadata: AirtableMetadata = await getAirtableMetadata(token);
 
 Airtable.configure({
   apiKey: token,

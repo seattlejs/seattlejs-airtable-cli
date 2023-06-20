@@ -4,7 +4,7 @@
      "target": "ESNext",
      "checkJs": false,
      "esModuleInterop": true,
-     "outDir": "out",
+     "outDir": "bin",
      "sourceMap": true,
      "moduleResolution": "nodenext",
      "resolveJsonModule": true

@@ -1,0 +1,9 @@
+.git
+.env
+.gitignore
+tsconfig.json
+test
+src
+index.ts
+.DS_STORE
+
