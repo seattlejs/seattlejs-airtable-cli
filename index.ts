@@ -1,3 +1,4 @@
+#! /usr/bin/env node
 import Airtable from "airtable";
 import {
   getAirtableEvents,
