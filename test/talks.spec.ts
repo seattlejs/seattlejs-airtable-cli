@@ -76,12 +76,12 @@ describe("reconcileTalks", function () {
     });
   });
   describe("should handle when talk exists but it's not on the event", function () {
-      const te = _.cloneDeep(targetEvent)
-      // remove dm from events json but not from talks json
-      te.websiteTalks = te.website.talks.filter(
-          (talkId) => !talkId.includes('dm-liao')
-      )
-      const updatedTalks = reconcileTalks(te, airtableSpeakers, websiteTalks)
+    const te = _.cloneDeep(targetEvent);
+    // remove dm from events json but not from talks json
+    te.websiteTalks = te.website.talks.filter(
+      (talkId) => !talkId.includes("dm-liao")
+    );
+    const updatedTalks = reconcileTalks(te, airtableSpeakers, websiteTalks);
     it("should return no talks to update", function () {
       assert(
         updatedTalks.length === 0,
@@ -98,7 +98,5 @@ describe("reconcileTalks", function () {
         `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`
       );
     });
-  })
+  });
 });
-
-
