@@ -33,6 +33,7 @@ import {
 import { getApiToken, saveApiToken } from "./src/auth.js";
 import { loadConfig, saveConfig } from "./src/config.js";
 
+console.log('welcome to the seattlejs-airtable-cli!')
 let token = await getApiToken()
 if (!token) {
     token = await promptForApiToken()
@@ -52,6 +53,7 @@ Airtable.configure({
   apiKey: token,
   endpointUrl: "https://api.airtable.com",
 });
+console.log("querying airtable...")
 const airtableBase = Airtable.base(airtableMetadata.baseId);
 
 // load the airtable data we'll need
@@ -67,7 +69,8 @@ const airtableSponsors = await getAirtableSponsors(
   airtableBase,
   airtableMetadata.sponsorsId
 );
-// load all the data that is in the website json
+
+console.log("gathering existing website data...")
 const websiteEvents = await getWebsiteEvents(config.seattlejsProjectPath);
 const websiteSpeakers = await getWebsiteSpeakers(config.seattlejsProjectPath);
 const websiteTalks = await getWebsiteTalks(config.seattlejsProjectPath);
