@@ -1,5 +1,5 @@
 import prompts from "prompts";
-import untildify from "untildify"
+import untildify from "untildify";
 import {
   AirtablePhoto,
   WebsiteAirtableMap,
@@ -83,42 +83,43 @@ export const promptPhotoResize = (newPhotos: AirtablePhoto[]): void => {
   }
 };
 
+export const promptForApiToken = async (retries = 1): Promise<string> => {
+  const message = [
+    "please provide an airtable Personal Access Token with scopes:\n",
+    "    data.records:read\n",
+    "    schema.bases:read\n",
+  ];
 
-
-export const promptForApiToken = async (retries=1): Promise<string> => {
-    const message = [
-        "please provide an airtable Personal Access Token with scopes:\n",
-        "    data.records:read\n",
-        "    schema.bases:read\n"
-    ]
-    
-    while (retries >= 0) {
-        retries--
-        const res = await prompts({
-            type: "text",
-            name: "apiToken",
-            message: message.join('')
-        })
-        if (validateAirtableToken(res.apiToken)) {
-            return res.apiToken
-        }
+  while (retries >= 0) {
+    retries--;
+    const res = await prompts({
+      type: "text",
+      name: "apiToken",
+      message: message.join(""),
+    });
+    if (validateAirtableToken(res.apiToken)) {
+      return res.apiToken;
     }
-    throw new Error("please provide a valid Airtable personal access token")
-}
+  }
+  throw new Error("please provide a valid Airtable personal access token");
+};
 
-export const promptForSeattlejsProjectPath = async (retries=1): Promise<string> => {
-    while (retries >= 0) {
-        retries--
-        const res = await prompts({
-            type: "text",
-            name: "projectPath",
-            message: "please provide the path to your local seattlejs.com repo\n"
-        })
-        const expandedPath = untildify(res.projectPath)
-        if (await validateSeattleJsProjectPath(expandedPath)) {
-            return expandedPath
-        }
+export const promptForSeattlejsProjectPath = async (
+  retries = 1
+): Promise<string> => {
+  while (retries >= 0) {
+    retries--;
+    const res = await prompts({
+      type: "text",
+      name: "projectPath",
+      message: "please provide the path to your local seattlejs.com repo\n",
+    });
+    const expandedPath = untildify(res.projectPath);
+    if (await validateSeattleJsProjectPath(expandedPath)) {
+      return expandedPath;
     }
-    throw new Error("please provide a path to a valid seattlejs.com repo or fork")
-}
-
+  }
+  throw new Error(
+    "please provide a path to a valid seattlejs.com repo or fork"
+  );
+};

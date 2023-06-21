@@ -1,18 +1,14 @@
- {
-   "compilerOptions": {
-     "module":"NodeNext",
-     "target": "ESNext",
-     "checkJs": false,
-     "esModuleInterop": true,
-     "outDir": "bin",
-     "sourceMap": true,
-     "moduleResolution": "nodenext",
-     "resolveJsonModule": true
-   },
-   "exclude": [
-     "node_modules"
-   ],
-   "types": [
-       "node"
-   ]
- }
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ESNext",
+    "checkJs": false,
+    "esModuleInterop": true,
+    "outDir": "bin",
+    "sourceMap": true,
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules"],
+  "types": ["node"]
+}

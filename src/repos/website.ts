@@ -22,35 +22,45 @@ const JSON_FILES = {
   sponsors: path.join(JSON_BASE, "sponsors.json"),
 };
 
-export const validateSeattleJsProjectPath = async (projectPath: string): Promise<boolean> => {
-    console.log('input path', projectPath)
-    for (let [type,file] of Object.entries(JSON_FILES)) {
-        const fullPath = path.join(projectPath, file)
-        console.log('validating path', fullPath)
-        if (!await exists(fullPath)) {
-            return false
-        }
+export const validateSeattleJsProjectPath = async (
+  projectPath: string
+): Promise<boolean> => {
+  console.log("input path", projectPath);
+  for (let [type, file] of Object.entries(JSON_FILES)) {
+    const fullPath = path.join(projectPath, file);
+    console.log("validating path", fullPath);
+    if (!(await exists(fullPath))) {
+      return false;
     }
-    return true
-}
+  }
+  return true;
+};
 
 const parseJSONFile = async (filePath: string): Promise<any> => {
   const textBuffer = await fs.readFile(filePath);
   return JSON.parse(String(textBuffer));
 };
 
-export const getWebsiteEvents = async (projectPath: string): Promise<WebsiteEvent[]> => {
-  return parseJSONFile(path.join(projectPath, JSON_FILES["events"]))
+export const getWebsiteEvents = async (
+  projectPath: string
+): Promise<WebsiteEvent[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["events"]));
 };
 
-export const getWebsiteSpeakers = async (projectPath: string): Promise<WebsiteSpeaker[]> => {
-  return parseJSONFile(path.join(projectPath, JSON_FILES["speakers"]))
+export const getWebsiteSpeakers = async (
+  projectPath: string
+): Promise<WebsiteSpeaker[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["speakers"]));
 };
-export const getWebsiteTalks = async (projectPath: string): Promise<WebsiteTalk[]> => {
-  return parseJSONFile(path.join(projectPath, JSON_FILES["talks"]))
+export const getWebsiteTalks = async (
+  projectPath: string
+): Promise<WebsiteTalk[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["talks"]));
 };
-export const getWebsiteSponsors = async (projectPath: string): Promise<WebsiteSponsor[]> => {
-  return parseJSONFile(path.join(projectPath, JSON_FILES["sponsors"]))
+export const getWebsiteSponsors = async (
+  projectPath: string
+): Promise<WebsiteSponsor[]> => {
+  return parseJSONFile(path.join(projectPath, JSON_FILES["sponsors"]));
 };
 
 const sleep = async (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -73,7 +83,11 @@ export const exportImages = async (imageObjects, type, projectPath) => {
     await sleep(250);
     if (imageObj.imageUri && imageObj.filename) {
       const imageUri = imageObj.imageUri;
-      const filePath = path.join(projectPath, IMAGE_DIRS[type], imageObj.filename);
+      const filePath = path.join(
+        projectPath,
+        IMAGE_DIRS[type],
+        imageObj.filename
+      );
       const imageExists = await exists(filePath);
       if (!imageExists) {
         exportedImages.push(imageObj);
@@ -90,7 +104,7 @@ export const exportData = async (jsData, type, projectPath) => {
   console.log("exporting", JSON_FILES[type]);
 
   const json = JSON.stringify(jsData, null, 4);
-  const fullPath = path.join(projectPath, JSON_FILES[type])
+  const fullPath = path.join(projectPath, JSON_FILES[type]);
   await fs.writeFile(fullPath, json);
 };
 
