@@ -48,13 +48,18 @@
       "node": true,
       "es6": true
     },
+    "parser" : "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "extends": [
       "eslint:recommended",
-      "prettier",
-      "standard-with-typescript"
+      "plugin:@typescript-eslint/recommended",
+      "prettier"
     ],
     "ignorePatterns": [],
     "parserOptions": {
+      "project": "tsconfig.json",
       "sourceType": "module",
       "ecmaVersion": 2022
     }

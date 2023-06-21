@@ -41,7 +41,7 @@ if (!token) {
     await saveApiToken(token)
 }
 
-let config = await loadConfig()
+const  config = await loadConfig()
 if (!config.seattlejsProjectPath) {
     const projectPath = await promptForSeattlejsProjectPath()
     config.seattlejsProjectPath = projectPath
@@ -87,7 +87,7 @@ const eventMap = mapAirtableEventsToWebsiteEvents(
   websiteEvents
 );
 
-let targetEvent = await getTargetEvent(eventMap);
+const targetEvent = await getTargetEvent(eventMap);
 if (!targetEvent.website) {
   targetEvent.website = makeWebsiteEvent(targetEvent.airtable);
 }
