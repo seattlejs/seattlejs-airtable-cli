@@ -25,10 +25,8 @@ const JSON_FILES = {
 export const validateSeattleJsProjectPath = async (
   projectPath: string
 ): Promise<boolean> => {
-  console.log("input path", projectPath);
   for (const [type, file] of Object.entries(JSON_FILES)) {
     const fullPath = path.join(projectPath, file);
-    console.log("validating path", fullPath);
     if (!(await exists(fullPath))) {
       return false;
     }
