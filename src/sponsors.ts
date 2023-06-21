@@ -26,21 +26,21 @@ export const reconcileSponsors = (
   const airtableEventSponsors = [];
   // if airtable lists any sponsors, get full objects from each id
   if (airtableEventSponsorIds) {
-    for (let airtableId of airtableEventSponsorIds) {
+    for (const airtableId of airtableEventSponsorIds) {
       airtableEventSponsors.push(
         airtableSponsors.find((sponsor) => sponsor.id == airtableId)
       );
     }
   }
   // check if sponsors exist already
-  for (let sponsor of airtableEventSponsors) {
+  for (const sponsor of airtableEventSponsors) {
     const { sponsor: newSponsor, logo: newLogo } = makeWebsiteSponsor(sponsor);
     newSponsors.push(newSponsor);
     // assume that if the sponsor json doesn't exist the photo doesn't exist
     newLogos.push(newLogo);
   }
   const updatedSponsors: WebsiteSponsor[] = [];
-  for (let [i, newSponsor] of newSponsors.entries()) {
+  for (const [i, newSponsor] of newSponsors.entries()) {
     // check event json
     if (!event.website.sponsors.includes(newSponsor.id)) {
       event.website.sponsors.push(newSponsor.id);

@@ -45,7 +45,7 @@ const getAirtableTables = async (baseId: string, token: string) => {
  */
 const getSeattleJsBaseId = async (token: string): Promise<string> => {
   const airtableBases = await getAirtableBases(token);
-  for (let base of airtableBases) {
+  for (const base of airtableBases) {
     if (base.name === BASE_NAME) {
       return base.id;
     }

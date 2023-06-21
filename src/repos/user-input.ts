@@ -33,7 +33,7 @@ export const getTargetEvent = async (
   const someMonthsAgo = getDateMonthsAgo(MONTHS_PRIOR_LIMIT);
   const someMonthsInFuture = getDateMonthsInFuture(MONTHS_IN_FUTURE_LIMIT);
   const choices: { title: string; value: WebsiteAirtablePair }[] = [];
-  for (let event in events) {
+  for (const event in events) {
     const eventDate = new Date(String(event));
     if (eventDate > someMonthsAgo && eventDate < someMonthsInFuture) {
       choices.push({
@@ -73,10 +73,10 @@ export const confirmUpdate = async (
 
 export const promptPhotoResize = (newPhotos: AirtablePhoto[]): void => {
   if (newPhotos.length) {
-    let message = [
+    const message = [
       "These photos need cropping and/or resizing (square, 300x300px)\n",
     ];
-    for (let photo of newPhotos) {
+    for (const photo of newPhotos) {
       message.push(`      ${photo.filename}\n`);
     }
     console.log(message.join(""));

@@ -23,7 +23,7 @@ describe("reconcileSpeakers", function () {
     });
     it("returns the correct speakers", function () {
       const correctSpeakerIds = ["cristina-rodriguez", "aiden-bai", "dm-liao"];
-      for (let correctSpeaker of correctSpeakerIds) {
+      for (const correctSpeaker of correctSpeakerIds) {
         assert(
           updatedSpeakers.find(
             (updatedSpeaker) => updatedSpeaker.id == correctSpeaker

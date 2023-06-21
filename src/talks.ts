@@ -18,11 +18,11 @@ export const reconcileTalks = (
     event.airtable,
     airtableSpeakers
   );
-  for (let speaker of airtableEventSpeakers) {
+  for (const speaker of airtableEventSpeakers) {
     newTalks.push(makeWebsiteTalk(speaker, event.airtable));
   }
   const updatedTalks: WebsiteTalk[] = [];
-  for (let newTalk of newTalks) {
+  for (const newTalk of newTalks) {
     // check if talk exists in events json
     if (!event.website.talks.includes(newTalk.id)) {
       // if it doesn't add it
@@ -45,7 +45,7 @@ const makeWebsiteTalk = (
   const speakerId = makeSpeakerId(airtableSpeaker.get("Full Name") as string);
   const eventId = makeEventId(airtableEvent.get("Name") as string);
   const id = makeTalkId(speakerId, eventId);
-  let talkType = normalizeTalkType(
+  const talkType = normalizeTalkType(
     (airtableSpeaker.get("Talk Type") as string) || ""
   );
   talk.id = id;

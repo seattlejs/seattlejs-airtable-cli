@@ -1,5 +1,3 @@
-import fs from "fs/promises";
-
 export const getAirtableEvents = async (airtableBase, eventsId: string) => {
   const events = [];
   await airtableBase(eventsId)

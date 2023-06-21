@@ -26,7 +26,7 @@ export const validateSeattleJsProjectPath = async (
   projectPath: string
 ): Promise<boolean> => {
   console.log("input path", projectPath);
-  for (let [type, file] of Object.entries(JSON_FILES)) {
+  for (const [type, file] of Object.entries(JSON_FILES)) {
     const fullPath = path.join(projectPath, file);
     console.log("validating path", fullPath);
     if (!(await exists(fullPath))) {
@@ -78,7 +78,7 @@ const exists = async (path) => {
 
 export const exportImages = async (imageObjects, type, projectPath) => {
   const exportedImages = [];
-  for (let imageObj of imageObjects) {
+  for (const imageObj of imageObjects) {
     // need to prevent getting rate-limited
     await sleep(250);
     if (imageObj.imageUri && imageObj.filename) {

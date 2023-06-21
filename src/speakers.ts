@@ -28,7 +28,7 @@ export const reconcileSpeakers = (
     event.airtable,
     airtableSpeakers
   );
-  for (let speaker of airtableEventSpeakers) {
+  for (const speaker of airtableEventSpeakers) {
     // make speaker object and get photo uri
     const { speaker: newSpeaker, speakerPhoto: newPhoto } =
       makeWebsiteSpeaker(speaker);
@@ -36,7 +36,7 @@ export const reconcileSpeakers = (
     newPhotos.push(newPhoto);
   }
   const updatedSpeakers: WebsiteSpeaker[] = [];
-  for (let [i, newSpeaker] of newSpeakers.entries()) {
+  for (const [i, newSpeaker] of newSpeakers.entries()) {
     if (websiteSpeakers.find((webSpeaker) => webSpeaker.id == newSpeaker.id)) {
       newPhotos.splice(i, 1);
     } else {
@@ -61,7 +61,7 @@ const makeWebsiteSpeaker = (
   speaker.twitter = twitter;
   speaker.pronouns = airtableSpeaker.get("Pronouns") as string;
 
-  let speakerPhoto = {} as AirtablePhoto;
+  const speakerPhoto = {} as AirtablePhoto;
   const photoObj = airtableSpeaker.get("Photo");
   // some speakers don't have photos
   if (typeof photoObj != "undefined") {
@@ -83,7 +83,7 @@ export const getEventSpeakers = (
 ): Record<FieldSet>[] => {
   const speakerRecords = [];
   const speakerIds = (airtableEvent.get("Speakers") as string[]) || [];
-  for (let speakerId of speakerIds) {
+  for (const speakerId of speakerIds) {
     // cartesian product runtime (O(a * b)), naughty naughty
     speakerRecords.push(
       airtableSpeakers.find((speaker) => speakerId == speaker.id)

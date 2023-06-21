@@ -48,7 +48,7 @@ export const mapAirtableEventsToWebsiteEvents = (
   websiteEvents: WebsiteEvent[]
 ): WebsiteAirtableMap => {
   const result: WebsiteAirtableMap = {};
-  for (let event of airtableEvents) {
+  for (const event of airtableEvents) {
     const name = event.get("Name");
     const id = makeEventId(name);
     const match = websiteEvents.find((e) => e.id == id);
