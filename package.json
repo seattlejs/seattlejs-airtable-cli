@@ -16,7 +16,7 @@
     "start": "npm run build && node ./bin/index.js",
     "test": "npm run build && mocha test ./bin/test/*.spec.js",
     "build": "tsc --build",
-    "lint": "prettier ./**/*.ts --write && eslint ./**/*.ts --fix"
+    "lint": "eslint ./**/*.ts --fix && prettier ./**/*.ts --write"
   },
   "dependencies": {
     "airtable": "^0.11.6",
