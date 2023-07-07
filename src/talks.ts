@@ -12,8 +12,12 @@ export const reconcileTalks = (
   event: WebsiteAirtablePair,
   airtableSpeakers: Record<FieldSet>[],
   websiteTalks: WebsiteTalk[]
-): WebsiteTalk[] => {
+): {
+  updatedTalks: WebsiteTalk[];
+  removedTalks: string[];
+} => {
   const newTalks = [];
+  const removedTalks = [];
   const airtableEventSpeakers = getEventSpeakers(
     event.airtable,
     airtableSpeakers
@@ -34,7 +38,16 @@ export const reconcileTalks = (
       updatedTalks.push(newTalk);
     }
   }
-  return updatedTalks;
+  // handle the case where a speaker is removed for a conflict, etc
+  for (const webTalk of event.website.talks) {
+    if (!newTalks.find((newTalk) => newTalk.id === webTalk)) {
+      removedTalks.push(webTalk);
+    }
+  }
+  event.website.talks = event.website.talks.filter((talkid) =>
+    newTalks.find((newTalk) => newTalk.id === talkid)
+  );
+  return { updatedTalks, removedTalks };
 };
 
 const makeWebsiteTalk = (

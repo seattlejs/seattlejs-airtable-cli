@@ -56,12 +56,16 @@ export const getTargetEvent = async (
 export const confirmUpdate = async (
   updatedSpeakers: WebsiteSpeaker[],
   updatedTalks: WebsiteTalk[],
+  removedTalks: string[],
   updatedSponsors: WebsiteSponsor[]
 ): Promise<boolean> => {
-  const confirmMessage = ["Confirm update:\n"];
-  confirmMessage.push(`${updatedSpeakers.length} new speakers\n`);
-  confirmMessage.push(`${updatedTalks.length} new talks\n`);
-  confirmMessage.push(`${updatedSponsors.length} new sponsors\n`);
+  const confirmMessage = [
+    "Confirm update:\n",
+    `${updatedTalks.length} new talks\n`,
+    `${removedTalks.length} removed talks ${ removedTalks.length ? `(${removedTalks})` : ''}\n`,
+    `${updatedSponsors.length} new sponsors\n`,
+    `${updatedSpeakers.length} new speakers\n`
+  ];
   const res = await prompts({
     type: "confirm",
     name: "confirmUpdate",

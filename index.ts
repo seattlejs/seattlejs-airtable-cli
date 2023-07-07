@@ -98,7 +98,7 @@ const { newPhotos, updatedSpeakers } = reconcileSpeakers(
   websiteSpeakers
 );
 
-const updatedTalks = reconcileTalks(
+const { updatedTalks, removedTalks } = reconcileTalks(
   targetEvent,
   airtableSpeakers,
   websiteTalks
@@ -115,6 +115,7 @@ reconcileEvents(targetEvent, websiteEvents);
 const confirmation = await confirmUpdate(
   updatedSpeakers,
   updatedTalks,
+  removedTalks,
   updatedSponsors
 );
 if (confirmation) {

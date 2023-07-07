@@ -85,9 +85,10 @@ export const getEventSpeakers = (
   const speakerIds = (airtableEvent.get("Speakers") as string[]) || [];
   for (const speakerId of speakerIds) {
     // cartesian product runtime (O(a * b)), naughty naughty
-    speakerRecords.push(
-      airtableSpeakers.find((speaker) => speakerId == speaker.id)
-    );
+    const result = airtableSpeakers.find((speaker) => speakerId == speaker.id);
+    if (result) {
+      speakerRecords.push(result);
+    }
   }
   return speakerRecords;
 };

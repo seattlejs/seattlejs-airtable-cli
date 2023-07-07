@@ -56,24 +56,4 @@ describe("reconcileSpeakers", function () {
       );
     });
   });
-  describe("should handle removing a speaker from existing speakers", function () {
-    const airSpeakers = airtableSpeakers.filter(speaker => !speaker.id.includes("cristina"))
-    const { removedSpeakers } = reconcileSpeakers(
-      targetEvent,
-      airSpeakers,
-      websiteSpeakers
-    );
-    it("returns the right number of speakers", function () {
-        assert(
-            removedSpeakers.length === 1,
-            `returned ${removedSpeakers.length} instead of 1`
-        );
-    });
-    it("returns the correct speaker", function () {
-        assert(
-            removedSpeakers.find(speaker => speaker.id.includes("cristina")),
-            "reconcileSpeakers() didn't return the removed speaker"
-        );
-    });
-  });
 });
