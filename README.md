@@ -11,6 +11,7 @@ This cli app helps organizers of the SeattleJS meetup administer the seattlejs.c
 3. give the token the following scopes (permissions):
    a. data.records:read
    b. schema.bases:read
+4. give the token access to the Seattle JS airtable base
 
 ### II. Clone the seattlejs/seattlejs.com GitHub Repo
 
@@ -33,3 +34,7 @@ follow the prompts to add your api token and point the cli at the website data.
 1. Double check that the json data looks good.
 2. Crop and/or resize any new speaker photos
 3. Commit any changes, push them up, and open a PR!
+
+## Publishing
+1. change the version (for example by using `npm version [patch|minor]`)
+2. make release in github
