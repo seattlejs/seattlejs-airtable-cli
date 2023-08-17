@@ -4,6 +4,7 @@ import {
   makeTalkId,
   makeEventId,
   normalizeTalkType,
+  handleTalkTopics,
 } from "./normalizers.js";
 import { WebsiteTalk, WebsiteAirtablePair } from "./repos/website-types.js";
 import { getEventSpeakers } from "./speakers.js";
@@ -66,7 +67,7 @@ const makeWebsiteTalk = (
   talk.event_id = eventId;
   talk.title = (airtableSpeaker.get("Talk Title") as string) || "";
   talk.abstract = (airtableSpeaker.get("Talk Blurb") as string) || "";
-  talk.topics = airtableSpeaker.get("Topics") as string[];
+  talk.topics = handleTalkTopics(airtableSpeaker.get("Topics") as string);
   talk.type = talkType;
   return talk;
 };
