@@ -69,3 +69,15 @@ export const normalizeTalkType = (
   }
   return "lightning";
 };
+
+export const handleTalkTopics = (
+  talkTopics: string | undefined | ""
+): string[] => {
+  if (talkTopics === "") {
+    return [];
+  }
+  if (typeof talkTopics === "undefined") {
+    return [];
+  }
+  return talkTopics.split(", ");
+};
