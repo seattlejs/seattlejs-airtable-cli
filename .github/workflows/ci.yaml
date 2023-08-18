@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: ci
+    name: CI
 
     runs-on: ubuntu-latest
 
