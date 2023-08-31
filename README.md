@@ -22,6 +22,10 @@ This cli app helps organizers of the SeattleJS meetup administer the seattlejs.c
 
 `npm install -g seattlejs-airtable-cli`
 
+or
+
+`npx seattlejs-airtable-cli@latest`
+
 ### IV. Run the CLI
 
 in your shell:
