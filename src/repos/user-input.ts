@@ -34,7 +34,7 @@ export const getTargetEvent = async (
   const someMonthsInFuture = getDateMonthsInFuture(MONTHS_IN_FUTURE_LIMIT);
   const choices: { title: string; value: WebsiteAirtablePair }[] = [];
   for (const event in events) {
-    const eventDate = new Date(String(event));
+    const eventDate = new Date(String(events[event].airtable.get("Date")));
     if (eventDate > someMonthsAgo && eventDate < someMonthsInFuture) {
       choices.push({
         title: String(events[event].airtable.get("Name")),
