@@ -62,9 +62,11 @@ const makeWebsiteSponsor = (
   sponsor: WebsiteSponsor;
   logo: AirtablePhoto;
 } => {
-  const name = normalizeSponsorName(airtableSponsor.get("Name") as string);
+  const airtableName = airtableSponsor.get("Name") as string
+  const name = normalizeSponsorName(airtableName);
   const sponsor = {} as WebsiteSponsor;
   sponsor.id = name;
+  sponsor.name = airtableName;
   sponsor.url = airtableSponsor.get("Website") as string;
   sponsor.copy = airtableSponsor.get("Web Copy") as string;
   const logoObj = airtableSponsor.get("Logo");

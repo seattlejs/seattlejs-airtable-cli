@@ -58,6 +58,7 @@ export type AirtablePhoto = {
 
 export type WebsiteSponsor = {
   id: string;
+  name: string;
   url: string;
   image: string;
   copy: string;
