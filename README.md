@@ -13,6 +13,10 @@ This cli app helps organizers of the SeattleJS meetup administer the seattlejs.c
    b. schema.bases:read
 4. give the token access to the Seattle JS airtable base
 
+Your token should look like the following (note: "Name" doesn't matter")
+
+<img width="445" alt="image" src="https://github.com/seattlejs/seattlejs-airtable-cli/assets/459878/5afa0565-1bfc-4bbb-9d61-cb46476f7caf">
+
 ### II. Clone the seattlejs/seattlejs.com GitHub Repo
 
 1. `git clone https://github.com/seattlejs/seattlejs.com`
