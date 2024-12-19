@@ -2,6 +2,7 @@ import { Record, FieldSet } from "airtable";
 
 export type WebsiteEvent = {
   id: string;
+  link?: string;
   title: string;
   date: string;
   sponsors: string[];

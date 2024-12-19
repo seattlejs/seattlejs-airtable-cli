@@ -30,8 +30,11 @@ export const makeWebsiteEvent = (
   const date = (airtableEvent.get("Date") as string) || "";
   const description = (airtableEvent.get("Description") as string) || "";
   const id = makeEventId(name);
+  const link = (airtableEvent.get("Link") as string) || "";
+  console.log("makeWebsiteEvent", {id, link});
   const event: WebsiteEvent = {
     id: id,
+    link,
     title: name,
     date: date,
     sponsors: [],
