@@ -7,8 +7,8 @@ import {
   WebsiteTalk,
 } from "./website-types.js";
 
-const IMAGE_BASE = "public";
-const JSON_BASE = "app/data";
+const IMAGE_BASE = "src";
+const JSON_BASE = "src/data";
 
 const IMAGE_DIRS = {
   speakers: path.join(IMAGE_BASE, "images/speakers"),
@@ -101,13 +101,14 @@ export const exportImages = async (imageObjects, type, projectPath) => {
 export const exportData = async (jsData, type, projectPath) => {
   console.log("exporting", JSON_FILES[type]);
 
-  const json = JSON.stringify(jsData, null, 4);
+  const json = await formatJSON(jsData);
   const fullPath = path.join(projectPath, JSON_FILES[type]);
   await fs.writeFile(fullPath, json);
 };
 
 import Fs from "fs";
 import Https from "https";
+import { formatJSON } from "../normalizers.js";
 
 /**
  * Download a file from the given `url` into the `targetFile`.

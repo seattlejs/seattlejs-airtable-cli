@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 import os from "os";
 import path from "path";
+import { formatJSON } from "./normalizers.js";
 
 const homePath = os.homedir();
 
@@ -43,6 +44,6 @@ export const loadConfig = async (): Promise<Config> => {
 
 export const saveConfig = async (config: Config): Promise<void> => {
   await ensureConfigDir();
-  const json = JSON.stringify(config, null, 4);
+  const json = await formatJSON(config);
   await fs.writeFile(CONFIG_PATH, json);
 };
