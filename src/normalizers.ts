@@ -1,3 +1,4 @@
+import prettier from "prettier";
 import slugify from "./slugify-import-shim.js";
 export const makeEventId = (eventName) => {
   if (typeof eventName === "undefined") {
@@ -81,3 +82,14 @@ export const handleTalkTopics = (
   }
   return talkTopics.split(", ");
 };
+
+export function formatJSON(data: any): Promise<string> {
+  return prettier.format(JSON.stringify(data) + "\n", {
+    parser: "json",
+    // This is the config from the seattlejs.com repo
+    useTabs: false,
+    singleQuote: true,
+    semi: false,
+    arrowParens: "avoid",
+  });
+}
