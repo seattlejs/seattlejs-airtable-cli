@@ -16,7 +16,7 @@ import {
 export const reconcileSpeakers = (
   event: WebsiteAirtablePair,
   airtableSpeakers: Record<FieldSet>[],
-  websiteSpeakers: WebsiteSpeaker[]
+  websiteSpeakers: WebsiteSpeaker[],
 ): {
   updatedSpeakers: WebsiteSpeaker[];
   newPhotos: AirtablePhoto[];
@@ -26,7 +26,7 @@ export const reconcileSpeakers = (
   // get the speakers for the passed event
   const airtableEventSpeakers = getEventSpeakers(
     event.airtable,
-    airtableSpeakers
+    airtableSpeakers,
   );
   for (const speaker of airtableEventSpeakers) {
     // make speaker object and get photo uri
@@ -49,7 +49,7 @@ export const reconcileSpeakers = (
 
 /** make a website speaker from an airtable speaker */
 const makeWebsiteSpeaker = (
-  airtableSpeaker: Record<FieldSet>
+  airtableSpeaker: Record<FieldSet>,
 ): { speaker: WebsiteSpeaker; speakerPhoto: AirtablePhoto } => {
   const speaker = {} as WebsiteSpeaker;
   const name = airtableSpeaker.get("Full Name");
@@ -79,7 +79,7 @@ const makeWebsiteSpeaker = (
  */
 export const getEventSpeakers = (
   airtableEvent,
-  airtableSpeakers
+  airtableSpeakers,
 ): Record<FieldSet>[] => {
   const speakerRecords = [];
   const speakerIds = (airtableEvent.get("Speakers") as string[]) || [];

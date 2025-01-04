@@ -5,14 +5,14 @@ import { handleTalkTopics } from "../src/normalizers.js";
 describe("getTalkTopics", function () {
   describe("should handle when topics exist", function () {
     const topics = handleTalkTopics(
-      airtableSpeakers[0].get("Topics") as string
+      airtableSpeakers[0].get("Topics") as string,
     );
     const expectedTopics = (airtableSpeakers[0].get("Topics") as string).split(
-      ", "
+      ", ",
     );
     assert(
       topics === expectedTopics,
-      `topics ${topics} did not match ${expectedTopics}`
+      `topics ${topics} did not match ${expectedTopics}`,
     );
   });
   describe("should handle when topics don't exist", function () {
@@ -20,11 +20,11 @@ describe("getTalkTopics", function () {
     const emptyStringTopics = handleTalkTopics("");
     assert(
       Array.isArray(undefinedTopics) && undefinedTopics.length === 0,
-      "should handle undefined"
+      "should handle undefined",
     );
     assert(
       Array.isArray(emptyStringTopics) && emptyStringTopics.length === 0,
-      "should handle empty string"
+      "should handle empty string",
     );
   });
 });

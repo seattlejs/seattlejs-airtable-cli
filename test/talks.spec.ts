@@ -23,27 +23,27 @@ describe("reconcileTalks", function () {
     const { updatedTalks } = reconcileTalks(
       te,
       airtableSpeakers,
-      emptyWebTalks
+      emptyWebTalks,
     );
     it("should return the right talks", function () {
       const updatedTalkIds = updatedTalks.map((talk) => talk.id);
       assert(
         updatedTalkIds.every((id) => correctTalkIds.includes(id)),
-        `updated talks: ${updatedTalkIds} don't match expected talks: ${correctTalkIds}`
+        `updated talks: ${updatedTalkIds} don't match expected talks: ${correctTalkIds}`,
       );
       assert(
         updatedTalks.length === 3,
-        `returned ${updatedTalks.length} instead of 3`
+        `returned ${updatedTalks.length} instead of 3`,
       );
     });
     it("should update the event json", function () {
       assert(
         te.website.talks.length === 3,
-        `event has ${te.website.talks.length} instead of 3`
+        `event has ${te.website.talks.length} instead of 3`,
       );
       assert(
         te.website.talks.every((id) => correctTalkIds.includes(id)),
-        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`
+        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`,
       );
     });
   });
@@ -51,7 +51,7 @@ describe("reconcileTalks", function () {
     const te = _.cloneDeep(targetEvent);
     // remove aiden from event json
     te.website.talks = te.website.talks.filter(
-      (talkId) => !talkId.includes("aiden")
+      (talkId) => !talkId.includes("aiden"),
     );
     // remove aiden from talks json
     const webTalks = websiteTalks.filter((talk) => !talk.id.includes("aiden"));
@@ -62,21 +62,21 @@ describe("reconcileTalks", function () {
       const updatedTalkIds = updatedTalks.map((talk) => talk.id);
       assert(
         updatedTalkIds[0] === correctTalkId,
-        `updated talks: ${updatedTalkIds} don't match expected talks: ${correctTalkIds}`
+        `updated talks: ${updatedTalkIds} don't match expected talks: ${correctTalkIds}`,
       );
       assert(
         updatedTalks.length === 1,
-        `returned ${updatedTalks.length} instead of 3`
+        `returned ${updatedTalks.length} instead of 3`,
       );
     });
     it("should update the event json", function () {
       assert(
         te.website.talks.length === 3,
-        `event has ${te.website.talks.length} instead of 3`
+        `event has ${te.website.talks.length} instead of 3`,
       );
       assert(
         te.website.talks.every((id) => correctTalkIds.includes(id)),
-        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`
+        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`,
       );
     });
   });
@@ -84,23 +84,23 @@ describe("reconcileTalks", function () {
     const te = _.cloneDeep(targetEvent);
     // remove dm from events json but not from talks json
     te.websiteTalks = te.website.talks.filter(
-      (talkId) => !talkId.includes("dm-liao")
+      (talkId) => !talkId.includes("dm-liao"),
     );
     const { updatedTalks } = reconcileTalks(te, airtableSpeakers, websiteTalks);
     it("should return no talks to update", function () {
       assert(
         updatedTalks.length === 0,
-        `${updatedTalks.length} talks were returned, expected 0`
+        `${updatedTalks.length} talks were returned, expected 0`,
       );
     });
     it("should update the event json", function () {
       assert(
         te.website.talks.length === 3,
-        `event has ${te.website.talks.length} instead of 3`
+        `event has ${te.website.talks.length} instead of 3`,
       );
       assert(
         te.website.talks.every((id) => correctTalkIds.includes(id)),
-        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`
+        `correct talks: ${correctTalkIds} doesn't match event talks: ${te.website.talks}`,
       );
     });
   });
@@ -109,20 +109,20 @@ describe("reconcileTalks", function () {
     let as = _.cloneDeep(airtableSpeakers);
     // remove one of the speakers from airtable to simulate a speaker who can't make it
     as = as.filter(
-      (speaker) => !speaker.get("Full Name").toLowerCase().includes("liao")
+      (speaker) => !speaker.get("Full Name").toLowerCase().includes("liao"),
     );
 
     const { removedTalks } = reconcileTalks(te, as, websiteTalks);
     it("should return the correct number of removed talks", function () {
       assert(
         removedTalks.length === 1,
-        `${removedTalks.length} removed talks were returned, expected 1`
+        `${removedTalks.length} removed talks were returned, expected 1`,
       );
     });
     it("should update the event json", function () {
       assert(
         te.website.talks.length === 2,
-        `event has ${te.website.talks.length} instead of 2`
+        `event has ${te.website.talks.length} instead of 2`,
       );
     });
   });
