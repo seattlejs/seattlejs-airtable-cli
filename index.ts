@@ -60,15 +60,15 @@ const airtableBase = Airtable.base(airtableMetadata.baseId);
 // load the airtable data we'll need
 const airtableEvents = await getAirtableEvents(
   airtableBase,
-  airtableMetadata.eventsId
+  airtableMetadata.eventsId,
 );
 const airtableSpeakers = await getAirtableSpeakers(
   airtableBase,
-  airtableMetadata.speakersId
+  airtableMetadata.speakersId,
 );
 const airtableSponsors = await getAirtableSponsors(
   airtableBase,
-  airtableMetadata.sponsorsId
+  airtableMetadata.sponsorsId,
 );
 
 console.log("gathering existing website data...");
@@ -84,7 +84,7 @@ const websiteSponsors = await getWebsiteSponsors(config.seattlejsProjectPath);
 // only used to prompt the user for which event they want to modify
 const eventMap = mapAirtableEventsToWebsiteEvents(
   airtableEvents,
-  websiteEvents
+  websiteEvents,
 );
 
 const targetEvent = await getTargetEvent(eventMap);
@@ -95,19 +95,19 @@ if (!targetEvent.website) {
 const { newPhotos, updatedSpeakers } = reconcileSpeakers(
   targetEvent,
   airtableSpeakers,
-  websiteSpeakers
+  websiteSpeakers,
 );
 
 const { updatedTalks, removedTalks } = reconcileTalks(
   targetEvent,
   airtableSpeakers,
-  websiteTalks
+  websiteTalks,
 );
 
 const { newLogos, updatedSponsors } = reconcileSponsors(
   targetEvent,
   airtableSponsors,
-  websiteSponsors
+  websiteSponsors,
 );
 
 reconcileEvents(targetEvent, websiteEvents);
@@ -116,14 +116,14 @@ const confirmation = await confirmUpdate(
   updatedSpeakers,
   updatedTalks,
   removedTalks,
-  updatedSponsors
+  updatedSponsors,
 );
 if (confirmation) {
   await exportData(websiteSpeakers, "speakers", config.seattlejsProjectPath);
   const existingPhotos = await exportImages(
     newPhotos,
     "speakers",
-    config.seattlejsProjectPath
+    config.seattlejsProjectPath,
   );
   await exportData(websiteTalks, "talks", config.seattlejsProjectPath);
 

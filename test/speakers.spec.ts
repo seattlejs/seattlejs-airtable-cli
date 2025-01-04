@@ -13,12 +13,12 @@ describe("reconcileSpeakers", function () {
     const { updatedSpeakers } = reconcileSpeakers(
       targetEvent,
       airtableSpeakers,
-      webSpeakers
+      webSpeakers,
     );
     it("returns the right number of speakers", function () {
       assert(
         updatedSpeakers.length === 3,
-        `returned ${updatedSpeakers.length} instead of 3`
+        `returned ${updatedSpeakers.length} instead of 3`,
       );
     });
     it("returns the correct speakers", function () {
@@ -26,9 +26,9 @@ describe("reconcileSpeakers", function () {
       for (const correctSpeaker of correctSpeakerIds) {
         assert(
           updatedSpeakers.find(
-            (updatedSpeaker) => updatedSpeaker.id == correctSpeaker
+            (updatedSpeaker) => updatedSpeaker.id == correctSpeaker,
           ),
-          `${correctSpeaker} not found in ${updatedSpeakers}`
+          `${correctSpeaker} not found in ${updatedSpeakers}`,
         );
       }
     });
@@ -36,23 +36,23 @@ describe("reconcileSpeakers", function () {
   describe("should handle adding a new speaker to existing speakers", function () {
     // take cristina out of speakers json
     const webSpeakers = websiteSpeakers.filter(
-      (speaker) => !speaker.id.includes("cristina")
+      (speaker) => !speaker.id.includes("cristina"),
     );
     const { updatedSpeakers } = reconcileSpeakers(
       targetEvent,
       airtableSpeakers,
-      webSpeakers
+      webSpeakers,
     );
     it("returns the right number of speakers", function () {
       assert(
         updatedSpeakers.length === 1,
-        `returned ${updatedSpeakers.length} instead of 1`
+        `returned ${updatedSpeakers.length} instead of 1`,
       );
     });
     it("returns the correct speaker", function () {
       assert(
         updatedSpeakers.find((speaker) => speaker.id.includes("cristina")),
-        "reconcileSpeakers() didn't return missing speaker"
+        "reconcileSpeakers() didn't return missing speaker",
       );
     });
   });

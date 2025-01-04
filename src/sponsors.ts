@@ -14,7 +14,7 @@ import { normalizeSponsorName, getFileExtension } from "./normalizers.js";
 export const reconcileSponsors = (
   event: WebsiteAirtablePair,
   airtableSponsors: Record<FieldSet>[],
-  websiteSponsors: WebsiteSponsor[]
+  websiteSponsors: WebsiteSponsor[],
 ): {
   newLogos: AirtablePhoto[];
   updatedSponsors: WebsiteSponsor[];
@@ -28,7 +28,7 @@ export const reconcileSponsors = (
   if (airtableEventSponsorIds) {
     for (const airtableId of airtableEventSponsorIds) {
       airtableEventSponsors.push(
-        airtableSponsors.find((sponsor) => sponsor.id == airtableId)
+        airtableSponsors.find((sponsor) => sponsor.id == airtableId),
       );
     }
   }
@@ -57,12 +57,12 @@ export const reconcileSponsors = (
 };
 
 const makeWebsiteSponsor = (
-  airtableSponsor: Record<FieldSet>
+  airtableSponsor: Record<FieldSet>,
 ): {
   sponsor: WebsiteSponsor;
   logo: AirtablePhoto;
 } => {
-  const airtableName = airtableSponsor.get("Name") as string
+  const airtableName = airtableSponsor.get("Name") as string;
   const name = normalizeSponsorName(airtableName);
   const sponsor = {} as WebsiteSponsor;
   sponsor.id = name;

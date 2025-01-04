@@ -23,7 +23,7 @@ const JSON_FILES = {
 };
 
 export const validateSeattleJsProjectPath = async (
-  projectPath: string
+  projectPath: string,
 ): Promise<boolean> => {
   for (const [type, file] of Object.entries(JSON_FILES)) {
     const fullPath = path.join(projectPath, file);
@@ -40,23 +40,23 @@ const parseJSONFile = async (filePath: string): Promise<any> => {
 };
 
 export const getWebsiteEvents = async (
-  projectPath: string
+  projectPath: string,
 ): Promise<WebsiteEvent[]> => {
   return parseJSONFile(path.join(projectPath, JSON_FILES["events"]));
 };
 
 export const getWebsiteSpeakers = async (
-  projectPath: string
+  projectPath: string,
 ): Promise<WebsiteSpeaker[]> => {
   return parseJSONFile(path.join(projectPath, JSON_FILES["speakers"]));
 };
 export const getWebsiteTalks = async (
-  projectPath: string
+  projectPath: string,
 ): Promise<WebsiteTalk[]> => {
   return parseJSONFile(path.join(projectPath, JSON_FILES["talks"]));
 };
 export const getWebsiteSponsors = async (
-  projectPath: string
+  projectPath: string,
 ): Promise<WebsiteSponsor[]> => {
   return parseJSONFile(path.join(projectPath, JSON_FILES["sponsors"]));
 };
@@ -84,7 +84,7 @@ export const exportImages = async (imageObjects, type, projectPath) => {
       const filePath = path.join(
         projectPath,
         IMAGE_DIRS[type],
-        imageObj.filename
+        imageObj.filename,
       );
       const imageExists = await exists(filePath);
       if (!imageExists) {

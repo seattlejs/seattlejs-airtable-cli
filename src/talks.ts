@@ -12,7 +12,7 @@ import { getEventSpeakers } from "./speakers.js";
 export const reconcileTalks = (
   event: WebsiteAirtablePair,
   airtableSpeakers: Record<FieldSet>[],
-  websiteTalks: WebsiteTalk[]
+  websiteTalks: WebsiteTalk[],
 ): {
   updatedTalks: WebsiteTalk[];
   removedTalks: string[];
@@ -21,7 +21,7 @@ export const reconcileTalks = (
   const removedTalks = [];
   const airtableEventSpeakers = getEventSpeakers(
     event.airtable,
-    airtableSpeakers
+    airtableSpeakers,
   );
   for (const speaker of airtableEventSpeakers) {
     newTalks.push(makeWebsiteTalk(speaker, event.airtable));
@@ -46,21 +46,21 @@ export const reconcileTalks = (
     }
   }
   event.website.talks = event.website.talks.filter((talkid) =>
-    newTalks.find((newTalk) => newTalk.id === talkid)
+    newTalks.find((newTalk) => newTalk.id === talkid),
   );
   return { updatedTalks, removedTalks };
 };
 
 const makeWebsiteTalk = (
   airtableSpeaker: Record<FieldSet>,
-  airtableEvent: Record<FieldSet>
+  airtableEvent: Record<FieldSet>,
 ): WebsiteTalk => {
   const talk = {} as WebsiteTalk;
   const speakerId = makeSpeakerId(airtableSpeaker.get("Full Name") as string);
   const eventId = makeEventId(airtableEvent.get("Name") as string);
   const id = makeTalkId(speakerId, eventId);
   const talkType = normalizeTalkType(
-    (airtableSpeaker.get("Talk Type") as string) || ""
+    (airtableSpeaker.get("Talk Type") as string) || "",
   );
   talk.id = id;
   talk.speaker_id = speakerId;

@@ -27,7 +27,7 @@ const getDateMonthsInFuture = (monthsInFuture: number): Date => {
 };
 
 export const getTargetEvent = async (
-  events: WebsiteAirtableMap
+  events: WebsiteAirtableMap,
 ): Promise<WebsiteAirtablePair> => {
   // reduce number of events to limit, taking most recent
   const someMonthsAgo = getDateMonthsAgo(MONTHS_PRIOR_LIMIT);
@@ -57,14 +57,14 @@ export const confirmUpdate = async (
   updatedSpeakers: WebsiteSpeaker[],
   updatedTalks: WebsiteTalk[],
   removedTalks: string[],
-  updatedSponsors: WebsiteSponsor[]
+  updatedSponsors: WebsiteSponsor[],
 ): Promise<boolean> => {
   const confirmMessage = [
     "Confirm update:\n",
     `${updatedTalks.length} new talks\n`,
-    `${removedTalks.length} removed talks ${ removedTalks.length ? `(${removedTalks})` : ''}\n`,
+    `${removedTalks.length} removed talks ${removedTalks.length ? `(${removedTalks})` : ""}\n`,
     `${updatedSponsors.length} new sponsors\n`,
-    `${updatedSpeakers.length} new speakers\n`
+    `${updatedSpeakers.length} new speakers\n`,
   ];
   const res = await prompts({
     type: "confirm",
@@ -109,7 +109,7 @@ export const promptForApiToken = async (retries = 1): Promise<string> => {
 };
 
 export const promptForSeattlejsProjectPath = async (
-  retries = 1
+  retries = 1,
 ): Promise<string> => {
   while (retries >= 0) {
     retries--;
@@ -124,6 +124,6 @@ export const promptForSeattlejsProjectPath = async (
     }
   }
   throw new Error(
-    "please provide a path to a valid seattlejs.com repo or fork"
+    "please provide a path to a valid seattlejs.com repo or fork",
   );
 };

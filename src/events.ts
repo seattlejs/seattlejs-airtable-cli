@@ -9,10 +9,10 @@ import {
 /** mutates the events json data to include any event updates */
 export const reconcileEvents = (
   event: WebsiteAirtablePair,
-  websiteEvents: WebsiteEvent[]
+  websiteEvents: WebsiteEvent[],
 ): void => {
   const existingEventIndex = websiteEvents.findIndex(
-    (webEvent) => webEvent.id == event.website.id
+    (webEvent) => webEvent.id == event.website.id,
   );
   if (existingEventIndex > 0) {
     // the event exists, need to replace it with the updated one,
@@ -24,14 +24,14 @@ export const reconcileEvents = (
 };
 
 export const makeWebsiteEvent = (
-  airtableEvent: Record<FieldSet>
+  airtableEvent: Record<FieldSet>,
 ): WebsiteEvent => {
   const name = (airtableEvent.get("Name") as string) || "";
   const date = (airtableEvent.get("Date") as string) || "";
   const description = (airtableEvent.get("Description") as string) || "";
   const id = makeEventId(name);
   const link = (airtableEvent.get("Link") as string) || "";
-  console.log("makeWebsiteEvent", {id, link});
+  console.log("makeWebsiteEvent", { id, link });
   const event: WebsiteEvent = {
     id: id,
     link,
@@ -48,7 +48,7 @@ export const makeWebsiteEvent = (
  * and the value is an object with the corresponding airtable and website events */
 export const mapAirtableEventsToWebsiteEvents = (
   airtableEvents: Record<FieldSet>[],
-  websiteEvents: WebsiteEvent[]
+  websiteEvents: WebsiteEvent[],
 ): WebsiteAirtableMap => {
   const result: WebsiteAirtableMap = {};
   for (const event of airtableEvents) {

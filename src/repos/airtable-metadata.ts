@@ -54,16 +54,16 @@ const getSeattleJsBaseId = async (token: string): Promise<string> => {
 };
 
 export const getAirtableMetadata = async (
-  token: string
+  token: string,
 ): Promise<AirtableMetadata> => {
   const baseId = await getSeattleJsBaseId(token);
   const tables = await getAirtableTables(baseId, token);
   const eventsTable = tables.find((table) => table.name === EVENTS_TABLE_NAME);
   const speakersTable = tables.find(
-    (table) => table.name === SPEAKERS_TABLE_NAME
+    (table) => table.name === SPEAKERS_TABLE_NAME,
   );
   const sponsorsTable = tables.find(
-    (table) => table.name === SPONSORS_TABLE_NAME
+    (table) => table.name === SPONSORS_TABLE_NAME,
   );
   const ids: AirtableMetadata = {
     baseId: baseId,
